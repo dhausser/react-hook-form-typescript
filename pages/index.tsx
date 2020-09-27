@@ -1,15 +1,25 @@
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "../components/errorMessage";
 
+interface FormInputs {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  username: string;
+  email: string;
+  age: number;
+  about: string;
+}
+
 function App() {
   const {
     register,
     handleSubmit,
     errors,
     setError,
-    clearError,
+    clearErrors,
     formState: { isSubmitting },
-  } = useForm();
+  } = useForm<FormInputs>();
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
@@ -17,10 +27,11 @@ function App() {
   const validateUserName = async (value) => {
     await sleep(1000);
     if (value !== "bill") {
-      setError("username", "validate");
+      setError("username", { types: { validate: true } });
     } else {
-      clearError("username");
+      clearErrors("username");
     }
+    return null;
   };
 
   return (
@@ -66,7 +77,7 @@ function App() {
       <ErrorMessage error={errors.age} />
 
       <label>About you</label>
-      <textarea name="about you" ref={register} />
+      <textarea name="about" ref={register} />
 
       <input disabled={isSubmitting} type="submit" />
     </form>
