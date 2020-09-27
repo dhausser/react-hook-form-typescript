@@ -20,18 +20,21 @@ function App() {
     clearErrors,
     formState: { isSubmitting },
   } = useForm<FormInputs>();
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormInputs) => {
     alert(JSON.stringify(data));
   };
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const validateUserName = async (value) => {
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  const validateUserName = async (value: string) => {
     await sleep(1000);
     if (value !== "bill") {
       setError("username", { types: { validate: true } });
-    } else {
-      clearErrors("username");
+      return false;
     }
-    return null;
+    {
+      clearErrors("username");
+      return true;
+    }
   };
 
   return (
