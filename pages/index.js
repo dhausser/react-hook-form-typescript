@@ -1,13 +1,20 @@
-import useForm from "react-hook-form";
-import ErrorMessage from "./errorMessage";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "../components/errorMessage";
 
 function App() {
-  const { register, handleSubmit, errors, setErrors, clearErrors, formState: { isSubmitting } }
+  const {
+    register,
+    handleSubmit,
+    errors,
+    setError,
+    clearError,
+    formState: { isSubmitting },
+  } = useForm();
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  const validateUserName = async value => {
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const validateUserName = async (value) => {
     await sleep(1000);
     if (value !== "bill") {
       setError("username", "validate");
@@ -21,9 +28,11 @@ function App() {
       <h1>Sign Up</h1>
       <label>First Name:</label>
       <input name="firstName" ref={register({ required: true })} />
+      <ErrorMessage error={errors.firstName} />
 
       <label>Last Name:</label>
       <input name="lastName" ref={register({ required: true })} />
+      <ErrorMessage error={errors.lastName} />
 
       <label>Gender</label>
       <select name="gender" ref={register({ required: true })}>
@@ -31,16 +40,22 @@ function App() {
         <option>Male</option>
         <option>Female</option>
       </select>
+      <ErrorMessage error={errors.gender} />
 
       <label>Username</label>
-      <input 
+      <input
         name="username"
-        onBlur={e => validateUserName(e.target.value)}
-        ref={register({ required: true, validate: validateUserName })}  
+        onBlur={(e) => validateUserName(e.target.value)}
+        ref={register({ required: true, validate: validateUserName })}
       />
+      <ErrorMessage error={errors.username} />
 
       <label>Email</label>
-      <input name="email" ref={register({ required: true, pattern: /^\S+@\S+$/i })}/>
+      <input
+        name="email"
+        ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+      />
+      <ErrorMessage error={errors.email} />
 
       <label>Age</label>
       <input
@@ -48,6 +63,7 @@ function App() {
         type="number"
         ref={register({ required: true, min: 18 })}
       />
+      <ErrorMessage error={errors.age} />
 
       <label>About you</label>
       <textarea name="about you" ref={register} />

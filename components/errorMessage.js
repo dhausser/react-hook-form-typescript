@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function ErrorMessage({ error }) {
+function ErrorMessage({ error }) {
   if (error) {
     switch (error.type) {
       case "required":
@@ -20,3 +18,5 @@ export default function ErrorMessage({ error }) {
 
   return null;
 }
+
+export { ErrorMessage };
