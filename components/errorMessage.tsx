@@ -1,4 +1,6 @@
-function ErrorMessage({ error }) {
+import { FieldErrors } from "react-hook-form";
+
+function ErrorMessage({ error }: FieldErrors) {
   if (error) {
     switch (error.type) {
       case "required":

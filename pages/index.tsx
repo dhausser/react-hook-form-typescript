@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "../components/errorMessage";
 
-interface FormInputs {
+export interface FormInputs {
   firstName: string;
   lastName: string;
   gender: string;
