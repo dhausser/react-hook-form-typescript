@@ -1,65 +1,60 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import useForm from "react-hook-form";
+import ErrorMessage from "./errorMessage";
 
-export default function Home() {
+function App() {
+  const { register, handleSubmit, errors, setErrors, clearErrors, formState: { isSubmitting } }
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
+  };
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const validateUserName = async value => {
+    await sleep(1000);
+    if (value !== "bill") {
+      setError("username", "validate");
+    } else {
+      clearError("username");
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <form className="App" onSubmit={handleSubmit(onSubmit)}>
+      <h1>Sign Up</h1>
+      <label>First Name:</label>
+      <input name="firstName" ref={register({ required: true })} />
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <label>Last Name:</label>
+      <input name="lastName" ref={register({ required: true })} />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <label>Gender</label>
+      <select name="gender" ref={register({ required: true })}>
+        <option>Select...</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      <label>Username</label>
+      <input 
+        name="username"
+        onBlur={e => validateUserName(e.target.value)}
+        ref={register({ required: true, validate: validateUserName })}  
+      />
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      <label>Email</label>
+      <input name="email" ref={register({ required: true, pattern: /^\S+@\S+$/i })}/>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+      <label>Age</label>
+      <input
+        name="age"
+        type="number"
+        ref={register({ required: true, min: 18 })}
+      />
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      <label>About you</label>
+      <textarea name="about you" ref={register} />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      <input disabled={isSubmitting} type="submit" />
+    </form>
+  );
 }
+
+export default App;
