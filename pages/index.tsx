@@ -29,11 +29,11 @@ function App() {
     await sleep(1000);
     if (value !== "bill") {
       setError("username", { types: { validate: true } });
-      return false;
+      return true;
     }
     {
       clearErrors("username");
-      return true;
+      return false;
     }
   };
 
