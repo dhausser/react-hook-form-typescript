@@ -1,14 +1,14 @@
-import { useForm } from "react-hook-form";
-import { ErrorMessage } from "../components/errorMessage";
+import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '../components/errorMessage'
 
 export interface FormInputs {
-  firstName: string;
-  lastName: string;
-  gender: string;
-  username: string;
-  email: string;
-  age: number;
-  about: string;
+  firstName: string
+  lastName: string
+  gender: string
+  username: string
+  email: string
+  age: number
+  about: string
 }
 
 function App() {
@@ -19,27 +19,36 @@ function App() {
     setError,
     clearErrors,
     formState: { isSubmitting },
-  } = useForm<FormInputs>();
+  } = useForm<FormInputs>()
   const onSubmit = (data: FormInputs) => {
-    alert(JSON.stringify(data));
-  };
+    alert(JSON.stringify(data))
+  }
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms))
   const validateUserName = async (value: string) => {
-    await sleep(1000);
-    if (value !== "bill") {
-      setError("username", { types: { validate: true } });
-      return true;
+    await sleep(1000)
+    if (value !== 'bill') {
+      setError('username', { types: { validate: true } })
+      return true
     }
     {
-      clearErrors("username");
-      return false;
+      clearErrors('username')
+      return false
     }
-  };
+  }
 
   return (
     <form className="App" onSubmit={handleSubmit(onSubmit)}>
       <h1>Sign Up</h1>
+
+      <button
+        onClick={() => {
+          window.alert('With typescript and Jest')
+        }}
+      >
+        Test Button
+      </button>
+
       <label>First Name:</label>
       <input name="firstName" ref={register({ required: true })} />
       <ErrorMessage error={errors.firstName} />
@@ -84,7 +93,7 @@ function App() {
 
       <input disabled={isSubmitting} type="submit" />
     </form>
-  );
+  )
 }
 
-export default App;
+export default App

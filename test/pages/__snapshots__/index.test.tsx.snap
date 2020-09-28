@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home page matches snapshot 1`] = `
+<DocumentFragment>
+  <form
+    class="App"
+  >
+    <h1>
+      Sign Up
+    </h1>
+    <button>
+      Test Button
+    </button>
+    <label>
+      First Name:
+    </label>
+    <input
+      name="firstName"
+    />
+    <label>
+      Last Name:
+    </label>
+    <input
+      name="lastName"
+    />
+    <label>
+      Gender
+    </label>
+    <select
+      name="gender"
+    >
+      <option>
+        Select...
+      </option>
+      <option>
+        Male
+      </option>
+      <option>
+        Female
+      </option>
+    </select>
+    <label>
+      Username
+    </label>
+    <input
+      name="username"
+    />
+    <label>
+      Email
+    </label>
+    <input
+      name="email"
+    />
+    <label>
+      Age
+    </label>
+    <input
+      name="age"
+      type="number"
+    />
+    <label>
+      About you
+    </label>
+    <textarea
+      name="about"
+    />
+    <input
+      type="submit"
+    />
+  </form>
+</DocumentFragment>
+`;
