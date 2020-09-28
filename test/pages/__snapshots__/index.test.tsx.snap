@@ -12,13 +12,13 @@ exports[`Home page matches snapshot 1`] = `
       Test Button
     </button>
     <label>
-      First Name:
+      First Name
     </label>
     <input
       name="firstName"
     />
     <label>
-      Last Name:
+      Last Name
     </label>
     <input
       name="lastName"

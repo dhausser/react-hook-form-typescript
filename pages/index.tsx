@@ -49,11 +49,11 @@ function App() {
         Test Button
       </button>
 
-      <label>First Name:</label>
+      <label>First Name</label>
       <input name="firstName" ref={register({ required: true })} />
       <ErrorMessage error={errors.firstName} />
 
-      <label>Last Name:</label>
+      <label>Last Name</label>
       <input name="lastName" ref={register({ required: true })} />
       <ErrorMessage error={errors.lastName} />
 
