@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "../components/errorMessage";
+// import { DevTool } from "@hookform/devtools";
 
 export interface FormInputs {
   firstName: string;
@@ -11,84 +11,86 @@ export interface FormInputs {
   about: string;
 }
 
+function onSubmit(data: FormInputs) {
+  alert(JSON.stringify(data));
+}
+
 function App() {
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { errors, isSubmitting },
-  } = useForm<FormInputs>();
-  const onSubmit = (data: FormInputs) => {
-    alert(JSON.stringify(data));
-  };
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-  const validateUserName = async (value: string) => {
-    await sleep(1000);
-    if (value !== "bill") {
-      setError("username", { types: { validate: true } });
-      return true;
-    }
-    {
-      clearErrors("username");
-      return false;
-    }
-  };
+  } = useForm<FormInputs>({ mode: "onChange" });
 
   return (
-    <form className="App" onSubmit={handleSubmit(onSubmit)}>
-      <h1>Sign Up</h1>
+    <>
+      <form className="App" onSubmit={handleSubmit(onSubmit)}>
+        <h1>Sign Up</h1>
 
-      <button
-        onClick={() => {
-          window.alert("With typescript and Jest");
-        }}
-      >
-        Test Button
-      </button>
+        <label>First Name</label>
+        <input {...register("firstName", { required: true, maxLength: 30 })} />
+        {errors.firstName && errors.firstName.type === "required" && (
+          <span>This is required</span>
+        )}
+        {errors.firstName && errors.firstName.type === "maxLength" && (
+          <span>Max length exceeded</span>
+        )}
 
-      <label>First Name</label>
-      <input {...register("firstName", { required: true })} />
-      <ErrorMessage error={errors.firstName} />
+        <label>Last Name</label>
+        <input {...register("lastName", { required: true })} />
+        {errors.lastName && errors.lastName.type === "required" && (
+          <span>This is required</span>
+        )}
 
-      <label>Last Name</label>
-      <input {...register("lastName", { required: true })} />
-      <ErrorMessage error={errors.lastName} />
+        <label>Gender</label>
+        <select {...register("gender", { required: true })}>
+          <option>Select...</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+        {errors.gender && errors.gender.type === "required" && (
+          <span>This is required</span>
+        )}
 
-      <label>Gender</label>
-      <select {...register("gender", { required: true })}>
-        <option>Select...</option>
-        <option>Male</option>
-        <option>Female</option>
-      </select>
-      <ErrorMessage error={errors.gender} />
+        <label>Username</label>
+        <input
+          {...register("username", {
+            required: true,
+          })}
+        />
+        {errors.username && errors.username.type === "required" && (
+          <span>This is required</span>
+        )}
 
-      <label>Username</label>
-      <input
-        // onBlur={(e) => validateUserName(e.target.value)}
-        {...register("username", {
-          required: true,
-          validate: validateUserName,
-        })}
-      />
-      <ErrorMessage error={errors.username} />
+        <label>Email</label>
+        <input
+          {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+        />
+        {errors.email && errors.email.type === "required" && (
+          <span>This is required</span>
+        )}
+        {errors.email && errors.email.type === "pattern" && (
+          <span>Please enter a valid email</span>
+        )}
 
-      <label>Email</label>
-      <input
-        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
-      />
-      <ErrorMessage error={errors.email} />
+        <label>Age</label>
+        <input
+          type="number"
+          {...register("age", { required: true, min: 18 })}
+        />
+        {errors.age && errors.age.type === "required" && (
+          <span>This is required</span>
+        )}
+        {errors.age && errors.age.type === "min" && (
+          <span>You must be over 18</span>
+        )}
 
-      <label>Age</label>
-      <input type="number" {...register("age", { required: true, min: 18 })} />
-      <ErrorMessage error={errors.age} />
+        <label>About you</label>
+        <textarea {...register("about")} />
 
-      <label>About you</label>
-      <textarea {...register("about")} />
-
-      <input disabled={isSubmitting} type="submit" />
-    </form>
+        <input disabled={isSubmitting} type="submit" />
+      </form>
+    </>
   );
 }
 
